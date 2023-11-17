@@ -1,0 +1,3 @@
+Select Products.ID As ID_Product, Products.Name, CategoriesProducts.Name As CategoryProductName From Products 
+Left Join CategoriesProducts On Products.CategoryID = CategoriesProducts.ID 
+
