@@ -1,0 +1,160 @@
+
+body { 
+    margin: 0; 
+    padding: 0; 
+    font-family: "Times New Roman", Times, serif; 
+    background-image: url( "../Files/Images/BackgroundImage.png" ); 
+    width: 100%; 
+} 
+
+#ID_HEADER_INNER_FIXED { 
+    position: fixed; 
+    width: 100%; 
+    padding: 0 5px; 
+    background-color: beige; 
+} 
+
+#ID_HEADER_INNER_FIXED ruby { 
+    display: flex; 
+    justify-content: space-around; 
+    align-items: center; 
+    width: 95%; 
+} 
+
+#ID_HEADER_INNER_FIXED_NAVBAR { 
+    width: 95%;
+} 
+
+#ID_HEADER_INNER_FIXED_NAVBAR ul { 
+    list-style-type: none; 
+    padding-left: 3px; 
+} 
+
+#ID_HEADER_INNER_FIXED_NAVBAR ul li { 
+    display: inline-block; 
+    vertical-align: top; 
+    margin: 0 7%; 
+} 
+
+#ID_HEADER_INNER_FIXED_NAVBAR ul li a, #ID_FOOTER_MAIN_CONTENT ul li a, #ID_DIV_BUTTON_LINK_FOR_CONNECTION_WORKER a { 
+    text-decoration: none; 
+    color: #222; 
+}
+
+#ID_HEADER_INNER_FIXED_NAVBAR ul li a:hover, #ID_FOOTER_MAIN_CONTENT ul li a:hover { 
+    color: rgb(255, 255, 0); 
+    text-decoration: underline; 
+    transition-duration: 1.5s; 
+} 
+
+#ID_HEADER_MAIN_CONTENT { padding-top: 50px; } #ID_HEADER_MAIN_CONTENT div ul { list-style-type: none; } 
+
+#ID_HEADER_MAIN_CONTENT div:first-child ul:first-child { 
+    padding-left: 0; 
+} 
+
+#ID_HEADER_MAIN_CONTENT > div { 
+    display: flex; 
+    justify-content: space-around; 
+} 
+
+#ID_HEADER_MAIN_CONTENT > div:nth-child(2) { 
+    padding-left: 4%;
+} 
+
+#ID_HEADER_MAIN_CONTENT div ul:nth-child(2) li:nth-child(2) div:nth-child(1) u { 
+    text-decoration: none; 
+    font-size: 12px; 
+} 
+
+#ID_DIV_BUTTON_LINK_FOR_CONNECTION_WORKER { 
+    border: 1px solid rgb(210, 210, 0); 
+    background-color: rgb(170, 170, 0); 
+    width: 130px; 
+    height: 20px; 
+    padding: 10px;
+} 
+
+#ID_DIV_BUTTON_LINK_FOR_CONNECTION_WORKER:hover { border: 3px solid yellow; } 
+
+#ID_DIV_BUTTON_LINK_FOR_CONNECTION_WORKER a { padding: 9px; } 
+
+
+#ID_AboutUs main > div { 
+    display: flex; 
+} 
+
+#ID_AboutUs main > div div { 
+    flex: 1 0; 
+} 
+
+#ID_AboutUs main div div div img { 
+    max-width: 220px; 
+    float: left; 
+    padding-right: 10px; 
+} 
+
+#ID_AboutUs main div div div h4 { 
+    text-align: justify; 
+    max-width: 500px; 
+} 
+
+#ID_AboutUs main { 
+    padding: 5px 10px;
+    text-align: center; 
+} 
+
+#ID_AboutUs main > div { 
+
+} 
+
+#ID_AboutUs main div div div { 
+    padding-left: 7%; 
+} 
+
+#ID_OurWorks_Main_DivPrintImages div { 
+    display: flex; 
+    justify-content: space-around; 
+} 
+
+.Class_OurWorks_Main_DivPrintImages_Images { 
+    width: 45%; 
+    padding-bottom: 5px; 
+}
+
+#ID_VideoList_Main_DivPrintVideos video { 
+    padding: 10px; 
+    width: 97%; 
+}  
+
+footer { 
+    padding: 10px;
+/*    color: #FFF;
+    background-color: #AA0D22;*/
+} 
+
+#ID_FOOTER_MAIN_CONTENT { 
+    display: flex; 
+    justify-content: space-around; 
+    padding: 10px;
+} 
+
+#ID_FOOTER_MAIN_CONTENT nav h2 { padding-left: 20px; } 
+
+#ID_FOOTER_MAIN_CONTENT div ul li, #ID_FOOTER_MAIN_CONTENT nav ul li { list-style-type: none; } 
+
+#ID_FOOTER_MAIN_CONTENT div ul { margin-left: -20px; } 
+
+@media ( max-width: 768px ) { 
+    #ID_HEADER_MAIN_CONTENT div h1 span:first-child { font-size: 22px; } 
+    
+    #ID_VideoList_Main_DivPrintVideos video { width: 95%; }
+} 
+
+/* max-width: 768px */
+@media ( max-width: 850px ) { 
+    #ID_HEADER_INNER_FIXED_NAVBAR ul li { 
+        margin: 0 2.5%; 
+    } 
+
+} 
