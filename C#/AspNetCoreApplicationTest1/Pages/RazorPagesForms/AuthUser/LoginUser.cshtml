@@ -1,0 +1,27 @@
+﻿@page
+@model AspNetCoreApplicationTest1.Pages.RazorPagesForms.AuthUser.AuthUserPage_LoginUser 
+@{ 
+    ViewData["ViewFolder"] = "AuthUser"; 
+    ViewData["ViewFile"] = "LoginUser";
+} 
+
+@if (Model.RedirectToPageAdministrator_Bool)
+{ 
+    <meta http-equiv = "refresh" content = "1;URL=../Administrator" /> 
+} 
+
+<h1> Login User </h1>
+
+<form asp-antiforgery = "true" method = "post" > 
+    <span class = "text-danger" asp-validation-for = "Form.E_MailAddress" > </span> 
+    <p> 
+        <label asp-for = "Form.E_MailAddress" > </label> 
+        <input asp-for = "Form.E_MailAddress" /> 
+    </p> 
+    <p> 
+        <label asp-for = "Form.Password" > </label> 
+        <input asp-for = "Form.Password" /> 
+    </p> 
+    <button asp-page-handler = "CheckInputData" > Войти </button> 
+</form>
+

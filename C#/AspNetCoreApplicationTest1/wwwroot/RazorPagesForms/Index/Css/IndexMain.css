@@ -1,0 +1,16 @@
+﻿
+thead { background-color: #00BFFF; }
+
+td {
+    color: blue;
+    padding: 2px 5px; 
+    border: 2px solid black; 
+}
+
+#ID_SECTION_PRINT_ALL_TABLES { 
+    display: grid; 
+    grid-template-rows: 100%; 
+    grid-template-columns: 1fr 1fr; 
+    padding-left: 10px; 
+} 
+

@@ -1,0 +1,13 @@
+const IndexMainData1JSON_ArrayData = [ 
+	{ "Id": 1, 
+	"Name": "Zhiguli", 
+	"Description": "", 
+	"Price": 12150, 
+	"CarCategory": 1 }, 
+	{ "Id": 2, 
+	"Name": "Tesla", 
+	"Description": "", 
+	"Price": 3010, 
+	"CarCategory": 2 }, 
+]; 
+

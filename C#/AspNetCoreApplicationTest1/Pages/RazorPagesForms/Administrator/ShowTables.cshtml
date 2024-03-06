@@ -1,0 +1,24 @@
+﻿@page
+@model AspNetCoreApplicationTest1.Pages.RazorPagesForms.Administrator.AdministratorPage_ShowTables
+@{
+}
+
+<table> 
+    <thead> 
+        <tr> 
+            <td> Name </td> 
+            <td> E-Mail </td> 
+            <td> Password </td> 
+        </tr> 
+    </thead> 
+    @foreach (AspNetCoreApplicationTest1.CustomFiles.Models.RegistrationUsers User in Model.ArrayUsers)
+    { 
+        <tbody> 
+            <tr> 
+                <td> @User.DateRegistration </td> 
+                <td> @User.E_MailAddress </td> 
+                <td> @User.HashPassword </td> 
+            </tr> 
+        </tbody> 
+    } 
+</table> 

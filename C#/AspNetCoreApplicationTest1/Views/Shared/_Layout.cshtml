@@ -1,0 +1,38 @@
+﻿<!-- Views -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - AspNetCoreApplicationTest1</title>
+    <link rel = "stylesheet" href = "/Lib/bootstrap/dist/css/bootstrap.min.css" /> 
+    <link rel = "stylesheet" href = "/Lib/Angular/styles.css" asp-append-version = "true" /> 
+    <link rel = "stylesheet" href = "/AspNetCoreApplicationTest1.styles.css" asp-append-version = "true" /> 
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+
+    <script src = "/Lib/bootstrap/dist/js/bootstrap.bundle.min.js"> </script> 
+    <script src = "/Lib/jquery/dist/jquery.min.js"> </script> 
+<!--        <script src = "/Home/Files/Jsons/IndexMainData.json" > </script> 
+    <script src = "/Home/Files/Jsons/IndexMainData1.json" > </script> -->
+    <script src = "/Lib/Angular/runtime.js" type = "module"> </script> 
+    <script src = "/Lib/Angular/polyfills.js" type = "module"> </script> 
+    <script src = "/Lib/Angular/styles.js" defer > </script> 
+    <script src = "/Lib/Angular/vendor.js" type = "module"> </script> 
+    <script src = "/Lib/Angular/main.js" type = "module" > </script> 
+
+    <script src = "/Lib/Angular-1.8.2/angular.min.js"> </script> 
+    <script src = "/Lib/React/React.js" > </script>
+    <script src = "/Lib/React/ReactDom.js" > </script> 
+    <script src = "/Lib/React/Babel.js" > </script> 
+    <script src = "/Lib/React/Optionally/index.js" > </script> 
+</head>
+<body>
+    
+    @RenderBody() 
+
+</body>
+</html>

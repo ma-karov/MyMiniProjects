@@ -1,0 +1,60 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>39d4961d-bb6a-498d-b9bd-3cd3e0c082d8</UserSecretsId>
+    <DockerDefaultTargetOS>Windows</DockerDefaultTargetOS>
+    <DockerfileContext>.</DockerfileContext>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <Optimize>False</Optimize>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <Optimize>True</Optimize>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="wwwroot\Home\Js\MainAngular\**" />
+    <Compile Remove="wwwroot\RazorPagesForms - Копировать\**" />
+    <Content Remove="wwwroot\Home\Js\MainAngular\**" />
+    <Content Remove="wwwroot\RazorPagesForms - Копировать\**" />
+    <EmbeddedResource Remove="wwwroot\Home\Js\MainAngular\**" />
+    <EmbeddedResource Remove="wwwroot\RazorPagesForms - Копировать\**" />
+    <None Remove="wwwroot\Home\Js\MainAngular\**" />
+    <None Remove="wwwroot\RazorPagesForms - Копировать\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CassandraCSharpDriver" Version="3.19.5" />
+    <PackageReference Include="EnyimMemcachedCore" Version="3.2.0" />
+    <PackageReference Include="InterSystemsCache" Version="6.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.10" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.10">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.17.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="CustomFiles\DataBaseS\" />
+    <Folder Include="CustomFiles\ExtensionsUser\Files\DataBaseS_ForClasses\" />
+    <Folder Include="wwwroot\Lib\Angular-1.8.2\i18n\ngLocale\" />
+    <Folder Include="wwwroot\Lib\Angular\" />
+    <Folder Include="wwwroot\RazorPagesForms\AuthUser\Files\Jsons\" />
+    <Folder Include="wwwroot\RazorPagesForms\Files\Images\" />
+    <Folder Include="wwwroot\RazorPagesForms\Files\Jsons\" />
+    <Folder Include="wwwroot\RazorPagesForms\Administrator\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Db4objects.Db4o">
+      <HintPath>..\..\..\..\..\Programms_Show_AND_Connect_DataBaseS\DB4Objects\bin\net-3.5\Db4objects.Db4o.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>

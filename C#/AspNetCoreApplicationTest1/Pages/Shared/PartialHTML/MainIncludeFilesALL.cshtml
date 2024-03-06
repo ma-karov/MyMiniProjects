@@ -1,0 +1,8 @@
+﻿@page 
+@model System.String 
+@{ System.String FolderFile = ViewBag.ViewFolder, FileNamePartial = ViewBag.ViewFile; } 
+
+<link rel = "stylesheet" href = "/RazorPagesForms/@( FolderFile )/Css/@( FileNamePartial )Main.css" asp-append-version = "true" /> 
+
+<script src = "/RazorPagesForms/@( FolderFile )/Files/Jsons/@( FileNamePartial )MainData.json" > </script> 
+<script src = "/RazorPagesForms/@( FolderFile )/Js/@( FileNamePartial )Main.js"> </script> 

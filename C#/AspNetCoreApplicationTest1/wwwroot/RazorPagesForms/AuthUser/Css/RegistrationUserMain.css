@@ -1,0 +1,36 @@
+﻿
+#ID_SECTION_PAGE_FORM_REGISTRATION { 
+    display: grid; 
+    grid-template-columns: 1fr 3fr; 
+}
+
+#ID_RUBY_FORM_REGISTRATION form p label {
+    display: block; 
+}
+
+#ID_RUBY_FORM_REGISTRATION form p:nth-child(4) h7 { 
+    display: block; 
+    font-weight: 400; 
+}
+
+#ID_RUBY_FORM_REGISTRATION form p:nth-child(4) label {
+    display: inline;
+} 
+
+#ID_DIV_RULES_WRITE_PASSWORD_TO_HTNL_TagHelper {
+    padding: 5px;
+    padding-left: 20px;
+    background-color: bisque;
+}
+
+#ID_DIV_RULES_WRITE_PASSWORD_TO_HTNL_TagHelper ul {
+    display: inline; 
+} 
+
+#ID_DIV_RULES_WRITE_PASSWORD_TO_HTNL_TagHelper ul li::marker { /* Маркеры Юникода https://symbl.cc/ru/unicode/table/#miscellaneous-symbols */ 
+    color: red;
+    content: "\2713\0020"; /*\2715*/
+}
+
+
+

@@ -1,0 +1,65 @@
+﻿@page 
+@model AspNetCoreApplicationTest1.Pages.RazorPagesForms.AuthUser.AuthUserPage_RegistrationUser 
+@{ 
+    ViewData["ViewFolder"] = "AuthUser";
+    ViewData["ViewFile"] = "RegistrationUser";
+} 
+
+<section id = "ID_SECTION_PAGE_FORM_REGISTRATION" ng-app = "RegistrationUserAPP" > 
+    @if (Model.RedirectToPageLoginUser_Bool)
+    { 
+        <meta http-equiv = "refresh" content = "1;URL=../LoginUser" /> 
+    } 
+    <ruby> 
+        
+    </ruby> 
+
+    <ruby id = "ID_RUBY_FORM_REGISTRATION" > 
+        <form asp-antiforgery = "true" method = "post" ng-controller = "RegistrationUserController" > 
+            <p> 
+                <label asp-for = "Form.Name" > </label> 
+                <input asp-for = "Form.Name" /> 
+                <span class = "text-danger" asp-validation-for = "Form.Name" > </span> 
+            </p> 
+            <p> 
+                <label asp-for = "Form.Surname" > </label> 
+                <input asp-for = "Form.Surname" /> 
+                <span class = "text-danger" asp-validation-for = "Form.Surname" > </span> 
+            </p> 
+            <p> 
+                <label asp-for = "Form.BirthDay" > </label> 
+                <input asp-for = "Form.BirthDay" /> 
+                <span class = "text-danger" asp-validation-for = "Form.BirthDay" > </span> 
+            </p> 
+            <p> 
+                <h7> Ваш пол: </h7> 
+                <input type = "radio" id = "Male" name = "Form.MaleStringBool" value = "Male" checked /> 
+                <label for = "Male" > Мужчина </label> <br /> 
+                <input type = "radio" id = "Female" name = "Form.MaleStringBool" value = "Female" /> 
+                <label for = "Female" > Женщина </label> 
+            </p>
+            <p> 
+                <label asp-for = "Form.E_MailAddress" > </label> 
+                <input asp-for = "Form.E_MailAddress" /> 
+                <span class = "text-danger" asp-validation-for = "Form.E_MailAddress" > </span> 
+            </p> 
+            <ExtensionsUserRulesWritePasswordToHTML-DivTagHelper /> 
+            <p> 
+                <label asp-for = "Form.Password" > </label> 
+                <input asp-for = "Form.Password" ng-model = "RegistrationUserController_InputTypePassword_ID_Password" ng-blur = "RegistrationUserController_InputTypePassword_EventBlur()" /> 
+                <span class = "text-danger" asp-validation-for = "Form.Password" > </span> 
+            </p> 
+            <p> 
+                <label asp-for = "Form.RepeatPassword" > </label> 
+                <input asp-for = "Form.RepeatPassword" /> 
+                <span class = "text-danger" asp-validation-for = "Form.RepeatPassword" > </span> 
+            </p> 
+            <button asp-page-handler = "CheckInputData" asp-route-Var = "@Model.Form.MaleStringBool" > Зарегистрироваться </button> 
+        </form> 
+        
+    </ruby> 
+</section> 
+
+<RazorPagesForms_RegistrationUserApp-Root> </RazorPagesForms_RegistrationUserApp-Root> 
+
+

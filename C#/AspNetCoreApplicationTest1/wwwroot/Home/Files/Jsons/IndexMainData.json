@@ -1,0 +1,20 @@
+//const MainDataJSON_Data = "{ \"id\": 8, \"firstName\": \"Mary\", \"lastName\": \"Anderson\", \"completeName\": \"Mary Anderson\" }"; 
+const IndexMainDataJSON_Data = [
+    {
+        "id": 1,
+        "firstName": "Alex",
+        "lastName": "Anderson",
+        "completeName": "Alex Anderson"
+    },
+    {
+        "id": 80,
+        "firstName": "Mary",
+        "lastName": "Anderson",
+        "completeName": "Mary Anderson"
+    }
+], IndexMainDataJSON_Data2 = {
+    "id": 901
+    "firstName": "Mary",
+    "lastName": "Anderson",
+    "completeName": "Mary Ande
+};

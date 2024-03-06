@@ -1,0 +1,23 @@
+﻿@page
+@model AspNetCoreApplicationTest1.Pages.RazorPagesForms.Administrator.AdministratorPage_Index 
+@{} 
+
+<h1> Admin </h1>
+
+<table> 
+    <thead> 
+        <tr> 
+            <td> Appelation </td> 
+            <td> Link </td> 
+        </tr> 
+    </thead> 
+    <tbody> 
+        @foreach (System.String AppelationTable in Model.ArrayDataBaseTableAppelation)
+        { 
+            <tr> 
+                <td> @AppelationTable </td> 
+                    <td> <a asp-page = "ShowTables" asp-page-handler = "SelectTable" asp-all-route-data = 'new System.Collections.Generic.Dictionary<System.String, System.String>() { { "Switch", "1" } }' > Go Print </a> </td>
+            </tr> 
+        }
+    </tbody>
+</table> 

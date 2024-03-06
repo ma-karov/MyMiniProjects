@@ -1,0 +1,61 @@
+﻿<!-- Views --> 
+@model IEnumerable<AspNetCoreApplicationTest1.CustomFiles.Models.Cars>
+
+<!-- <meta http-equiv = "refresh" content = "0;URL=RazorPagesForms" /> --> 
+<!-- <meta http-equiv = "refresh" content = "0;URL=RazorPagesForms/AuthUser/LoginUser" /> --> 
+
+<header>
+    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <div class="container-fluid">
+            <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">AspNetCoreApplicationTest1</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"> </span>
+            </button>
+            <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                <ul class="navbar-nav flex-grow-1">
+                    <li class="nav-item"> 
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index" > Home </a> 
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy" > Privacy </a>
+                    </li> 
+                </ul> 
+                <ul> 
+                    <li class="nav-item"> 
+                        <a class="nav-link text-dark" asp-area = "" asp-controller = "RazorPagesForms" asp-action = "AuthUser/LoginUser" > Войти </a> 
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area = "" asp-controller = "RazorPagesForms" asp-action = "AuthUser/RegistrationUser" > Регистрация </a>
+                    </li> 
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+<div class = "container">
+    <main role = "main" class = "pb-3" >
+        <div class = "text-center"> 
+            <h1 class = "display-4"> Welcome </h1> 
+            <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p> 
+        </div> 
+        <h2> All Machines: </h2> 
+        @foreach (AspNetCoreApplicationTest1.CustomFiles.Models.Cars Car in Model) 
+        { 
+            <p>  @Car.Name  - @Car.Price.ToString() </p> 
+        } 
+
+    </main>
+</div>
+
+<footer class = "border-top footer text-muted">
+    <div class = "container">
+        &copy; 2023 - AspNetCoreApplicationTest1 - <a asp-area = "" asp-controller = "Home" asp-action = "Privacy" > Privacy </a> 
+    </div>
+</footer>
+<div id = "content" > </div> <br> <br> 
+
+    
+<a asp-controller = "RazorPagesForms" > Click </a> 
+@*    <a asp-page = "RazorPageIndex1" > Click </a> *@
+<div ng-app > 4 + 2 = {{ 4 + 2 }} </div>
+<App-Root> </App-Root> 
