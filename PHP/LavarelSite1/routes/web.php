@@ -21,6 +21,13 @@ use App\Http\Controllers\HomeController;
     return view('Home.Index');
 }); */ 
 
-Route::get("Home", "HomeController@Index" )->name("Home-Index");  
+// GET 
+Route::get("", "HomeController@Index" )->name("Home-Index");  
+Route::get("Home", "HomeController@Index" )->name("Home-Index"); 
+Route::get("Home/Index", "HomeController@Index" )->name("Home-Index");  
 
+///Route::get("ApiSecretSolidity/RegistrationUsers/CreateUser", "ApiSecretSolidity_RegistrationUsers_Controller@CreateUser" )->name("ApiSecretSolidity-RegistrationUsers-CreateUser"); 
+
+
+// POST 
 Route::post("Home/Response", "HomeController@Response" )->name("Home-Response"); 
