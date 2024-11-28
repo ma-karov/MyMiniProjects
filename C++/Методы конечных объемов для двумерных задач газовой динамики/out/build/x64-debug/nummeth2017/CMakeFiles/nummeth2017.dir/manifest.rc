@@ -1,0 +1,2 @@
+#pragma code_page(65001)
+1 /* CREATEPROCESS_MANIFEST_RESOURCE_ID */ 24 /* RT_MANIFEST */ "C:/Users/ReyLegar/source/repos/nummeth2017/out/build/x64-debug/nummeth2017/CMakeFiles/nummeth2017.dir/embed.manifest"
