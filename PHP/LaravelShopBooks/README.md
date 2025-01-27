@@ -30,6 +30,15 @@
 Книга может иметь несколько авторов и несколько жанров.
 
 
+## Установка проекта
+`git clone https://github.com/ma-karov/MyMiniProjects/edit/LanguagesProgramming/PHP/LaravelShopBooks.git`
+
+`cd \LaravelShopBooks`
+
+`php artisan: migrate` - создаст все необходимые таблицы из database/migrations 
+
+`php artisan GenerateData:InDataBase` - заполнит таблицы тестовыми данными на основе Mocks LaravelShopBooks/app/Http/CustomFiles/Mocks/ 
+
 
 
 ## About Laravel
