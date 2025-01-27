@@ -1,0 +1,256 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "ShopBooks Doc API",
+        "version": "0.0.1"
+    },
+    "paths": {
+        "/api/": {},
+        "/api/GetPopulateAuthors": {
+            "get": {
+                "tags": [
+                    "ShopBooksApi"
+                ],
+                "summary": "Получение популярных авторов за период",
+                "operationId": "46cc96a5b01f011520d61706fc965fc2",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "allOf": [
+                                    {
+                                        "properties": {
+                                            "date_from": {
+                                                "type": "integer",
+                                                "example": "1600"
+                                            },
+                                            "date_to": {
+                                                "type": "integer",
+                                                "example": "1600"
+                                            },
+                                            "genre_appellation": {
+                                                "type": "string",
+                                                "example": "Жанр",
+                                                "nullable": true
+                                            },
+                                            "limit": {
+                                                "type": "integer",
+                                                "example": "4",
+                                                "nullable": true
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "name": {
+                                            "type": "string",
+                                            "example": "Автор"
+                                        },
+                                        "birth_day": {
+                                            "type": "string",
+                                            "example": "2100-0-0"
+                                        },
+                                        "count": {
+                                            "type": "integer",
+                                            "example": "0"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/GetPopulateBooks": {
+            "get": {
+                "tags": [
+                    "ShopBooksApi"
+                ],
+                "summary": "Получение популярных книг за период",
+                "operationId": "a7389e0448629976590e74fcc2de2a2a",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "allOf": [
+                                    {
+                                        "properties": {
+                                            "date_from": {
+                                                "type": "integer",
+                                                "example": "1600"
+                                            },
+                                            "date_to": {
+                                                "type": "integer",
+                                                "example": "1600"
+                                            },
+                                            "genre_appellation": {
+                                                "type": "string",
+                                                "example": "Жанр",
+                                                "nullable": true
+                                            },
+                                            "limit": {
+                                                "type": "integer",
+                                                "example": "4",
+                                                "nullable": true
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "appellation": {
+                                            "type": "string",
+                                            "example": "Автор"
+                                        },
+                                        "year": {
+                                            "type": "integer",
+                                            "example": "2100"
+                                        },
+                                        "genres": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "integer"
+                                            },
+                                            "example": "[1,2]"
+                                        },
+                                        "authors": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "integer"
+                                            },
+                                            "example": "[1,2]"
+                                        },
+                                        "birth_day": {
+                                            "type": "string",
+                                            "example": "2100-0-0"
+                                        },
+                                        "count": {
+                                            "type": "integer",
+                                            "example": "0"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/AddBook": {
+            "post": {
+                "tags": [
+                    "ShopBooksApi"
+                ],
+                "summary": "Добавление книги",
+                "operationId": "22d4de49090007796f088a89331838fd",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "allOf": [
+                                    {
+                                        "properties": {
+                                            "appellation": {
+                                                "type": "string",
+                                                "example": "Автор"
+                                            },
+                                            "year": {
+                                                "type": "integer",
+                                                "example": "2100"
+                                            },
+                                            "genres": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "integer"
+                                                },
+                                                "example": "[1,2]"
+                                            },
+                                            "authors": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "integer"
+                                                },
+                                                "example": "[1,2]"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "type": "integer",
+                                            "example": "1"
+                                        },
+                                        "appellation": {
+                                            "type": "string",
+                                            "example": "Автор"
+                                        },
+                                        "year": {
+                                            "type": "integer",
+                                            "example": "2100"
+                                        },
+                                        "genres": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "integer"
+                                            },
+                                            "example": "[1,2]"
+                                        },
+                                        "authors": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "integer"
+                                            },
+                                            "example": "[1,2]"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "ShopBooksApi",
+            "description": "ShopBooksApi"
+        }
+    ]
+}
