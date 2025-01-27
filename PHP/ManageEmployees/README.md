@@ -15,10 +15,10 @@
 2. Документирование кода
 3. Вывод информации о филиалах и сотрудниках без перезагрузки экрана
 
-##Установка проекта
-`git clone https://github.com/.git`
+## Установка проекта
+`git clone https://github.com/ma-karov/MyMiniProjects/edit/LanguagesProgramming/PHP/ManageEmployees.git`
 
-`cd laravel-portfolio`
+`cd ManageEmployees`
 
 `php artisan: migrate` - создаст все необходимые таблицы из database/migrations 
 
