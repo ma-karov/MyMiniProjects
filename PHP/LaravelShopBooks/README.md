@@ -31,9 +31,9 @@
 
 
 ## Установка проекта
-`git clone https://github.com/ma-karov/MyMiniProjects/edit/LanguagesProgramming/PHP/LaravelShopBooks.git`
+`git clone -b LanguagesProgramming --single-branch https://github.com/ma-karov/MyMiniProjects.git PHP/LaravelShopBooks`
 
-`cd \LaravelShopBooks`
+`cd PHP\LaravelShopBooks`
 
 `php artisan: migrate` - создаст все необходимые таблицы из database/migrations 
 
