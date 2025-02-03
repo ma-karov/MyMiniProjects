@@ -6,4 +6,5 @@ interface InterfaceShopBooksApiControllerRepository
 {
     function getPopulateAuthors(array $arrayValidatedParameters): array;
     function getPopulateBooks(array $arrayValidatedParameters): array;
+    function addBook(array $arrayValidatedParameters): array;
 }

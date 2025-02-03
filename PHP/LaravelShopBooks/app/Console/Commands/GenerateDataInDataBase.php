@@ -42,6 +42,9 @@ class GenerateDataInDataBase extends Command
         \App\Models\Genre::insert( (new \App\Http\CustomFiles\Mocks\GenresMock())->getGenres() );
         \App\Models\Sell::insert( (new \App\Http\CustomFiles\Mocks\SellsMock())->getSells() );
 
+        \App\Models\BookAndAuthor::insert( (new \App\Http\CustomFiles\Mocks\BooksAndAuthorsMock())->getBooksAndAuthors() );
+        \App\Models\BookAndGenre::insert( (new \App\Http\CustomFiles\Mocks\BooksAndGenresMock())->getBooksAndGenres() );
+
         $this->info("Command complete");
     }
 }

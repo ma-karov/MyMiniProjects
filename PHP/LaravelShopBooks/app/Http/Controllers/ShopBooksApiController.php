@@ -25,6 +25,6 @@ class ShopBooksApiController extends Controller
 
     function addBook(\App\Http\Requests\ShopBooksApiController\AddBook_FormRequest $httpFormRequest): array
     {
-        return array( 'Answer' => \App\Models\Book::create($httpFormRequest->validated()) );
+        return $this->interfaceRepository->addBook($httpFormRequest->validated());
     }
 }

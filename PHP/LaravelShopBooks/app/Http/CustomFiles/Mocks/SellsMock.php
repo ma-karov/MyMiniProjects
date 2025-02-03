@@ -19,8 +19,13 @@ class SellsMock
                 "date" => new \DateTime() ,
                 "count" => "4",
                 "book_id" => "2"
+            ),
+            array
+            (
+                "date" => new \DateTime() ,
+                "count" => "7",
+                "book_id" => "2"
             )
         );
     }
 }
-

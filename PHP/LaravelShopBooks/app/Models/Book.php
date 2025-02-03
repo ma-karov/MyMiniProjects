@@ -16,8 +16,7 @@ class Book extends Model
         ),
     $fillable = array
     (
-        'appellation', 'year',
-        'authors', 'genres'
+        'appellation', 'year' #, 'authors', 'genres'
     );
 
 

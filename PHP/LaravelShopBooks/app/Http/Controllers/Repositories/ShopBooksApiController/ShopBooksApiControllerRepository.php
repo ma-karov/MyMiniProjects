@@ -4,102 +4,216 @@ namespace App\Http\Controllers\Repositories\ShopBooksApiController;
 
 class ShopBooksApiControllerRepository implements InterfaceShopBooksApiControllerRepository
 {
-    private function findID_ByGenre($collection, string $genreAppellation)
+    private function notEqualArrayLength(array $array1, array $array2): bool
     {
-        define('GENRE_ID', \App\Models\Genre::where('appellation', '=', $genreAppellation)
-            ->select("id")->get()->first()->getAttributeValue("id"));
-
-        #dd($collection->where('genres', '=', '[' . GENRE_ID . ']')->orWhere('genres', 'Like', '%, ' . GENRE_ID . ']')->orWhere('genres', 'Like', '%' . GENRE_ID . ',%')->get());
-        return $collection->where('genres', '=', '[' . GENRE_ID . ']')->orWhere('genres', 'Like', '%, ' . GENRE_ID . ']')->orWhere('genres', 'Like', '%' . GENRE_ID . ',%');
-    }
-
-    private function getAuthorsUniqueID_ByArrayBooks(\Illuminate\Database\Eloquent\Collection $collectionBooks): array
-    {
-        $arrayIDS = array(); $arrayIDS_Length = 0;
-        foreach ($collectionBooks as $book)
-            foreach (json_decode($book->getAttributeValue("authors")) as $authorID)
-            {
-                foreach ($arrayIDS as $ID)
-                    if ($ID == $authorID)
-                        goto LABEL_BREAK;
-
-                $arrayIDS[$arrayIDS_Length++] = $authorID;
-
-                LABEL_BREAK:
-            }
-
-        return $arrayIDS;
-    }
-
-    function getGroupByBookIDS_AllSells(\Illuminate\Database\Eloquent\Collection $collectionSells): array
-    {
-        $arraySells = array();
-        $arrayBookIDS = array(); $arrayBookIDS_Length = 0;
-        foreach ($collectionSells as $sell):
-            $arrayBookIDS[$arrayBookIDS_Length] = $sell->getAttributeValue("book_id");
-            $arraySells[$arrayBookIDS_Length] = array
-            (
-                'date' => \App\Models\Sell::where(array
-                    (
-                        array( 'book_id', '=', $arrayBookIDS[$arrayBookIDS_Length] ),
-                        array( 'count', '=', $sell->getAttributeValue("MaxCount") )
-                    ) )->select('date')->get()->first()['date'],
-                'book_id' => $sell->getAttributeValue('book_id'),
-                'MaxCount' => $sell->getAttributeValue('MaxCount')
-            );
-            $arrayBookIDS_Length++;
-
-        endforeach;
-
-        return array( $arraySells, $arrayBookIDS );
+        return ( count($array1) - count($array2) );
     }
 
     function getPopulateAuthors(array $arrayValidatedParameters): array
     {
-        $collectionBooks = \App\Models\Book::whereBetween("year", array($arrayValidatedParameters['date_from'], $arrayValidatedParameters['date_to']) );
-        if (isset($arrayValidatedParameters['genre_appellation']))
-            $collectionBooks = $this->findID_ByGenre($collectionBooks, $arrayValidatedParameters['genre_appellation']);
+        return (
+            isset($arrayValidatedParameters['genre_appellation']) ?
+                \Illuminate\Support\Facades\DB::select("
+                    Select
+                        ( Select name From authors Where id = authorID ) As author_name,
+                        ( Select birth_day From authors Where id = authorID ) As author_birth_day,
+                        summa_purchases From ( Select authors.id As authorID, Sum(sells.count) As summa_purchases
+                    From books
+                    Inner Join sells On books.id = book_id
+                    Inner Join books_and_authors On books.id = books_and_authors.book_id
+                    Inner Join authors On authors.id = books_and_authors.author_id
 
-        $collectionBooks = $collectionBooks->leftJoin('sells', 'books.id', '=', 'sells.book_id')
-            ->select( array( "books.id", "books.authors", "sells.count" ) )
-            ->take($arrayValidatedParameters['limit'])->get(); #->toArray();
-
-
-        $arrayAuthors = \App\Models\Author::whereIn("id", $this->getAuthorsUniqueID_ByArrayBooks($collectionBooks))
-            ->select( array( "name", "birth_day") )->get()->toArray();
-
-        $arrayAuthors_Length = 0;
-        foreach ($collectionBooks as $book)
-            $arrayAuthors[$arrayAuthors_Length++]["count"] = $book->getAttributeValue("count");
-
-        return $arrayAuthors;
+                    Where sells.date Between :BOOKS_DATE_BEGIN And :BOOKS_DATE_END
+                        And books.id In (
+                                            Select book_id From books_and_genres
+                                            Inner Join genres On genres.id = genre_id
+                                            Where genres.appellation = :GENRE_APPELLATION
+                                        )
+                    Group By authors.id
+                    Order By summa_purchases Desc
+                    ) As table1
+                    Limit :LIMIT",
+                    array
+                    (
+                        ":BOOKS_DATE_BEGIN" => $arrayValidatedParameters['date_from'],
+                        ":BOOKS_DATE_END" => $arrayValidatedParameters['date_to'],
+                        ":GENRE_APPELLATION" => $arrayValidatedParameters['genre_appellation'],
+                        ":LIMIT" => $arrayValidatedParameters['limit']
+                    )
+                ) :
+                \Illuminate\Support\Facades\DB::select("
+                    Select
+                        ( Select name From authors Where id = authorID ) As author_name,
+                        ( Select birth_day From authors Where id = authorID ) As author_birth_day,
+                        summa_purchases
+                    From (
+                        Select authors.id As authorID, Sum(sells.count) As summa_purchases
+                        From books
+                        Inner Join sells On books.id = book_id
+                        Inner Join books_and_authors On books.id = books_and_authors.book_id
+                        Inner Join authors on books_and_authors.author_id = authors.id
+                        Where sells.date Between :BOOKS_DATE_BEGIN And :BOOKS_DATE_END
+                        Group By authorID
+                        Order By summa_purchases Desc
+                    ) As table1
+                    Limit :LIMIT",
+                    array
+                    (
+                        ":BOOKS_DATE_BEGIN" => $arrayValidatedParameters['date_from'],
+                        ":BOOKS_DATE_END" => $arrayValidatedParameters['date_to'],
+                        ":LIMIT" => $arrayValidatedParameters['limit']
+                    )
+                )
+        );
     }
 
     function getPopulateBooks(array $arrayValidatedParameters): array
     {
-        $collectionSells = \App\Models\Sell::whereBetween("date", array( new \DateTime($arrayValidatedParameters['date_from'] . '-1-1'), new \DateTime($arrayValidatedParameters['date_to'] . '-1-1') ) );
+        $arrayPopulateBooks = ( isset($arrayValidatedParameters['genre_appellation']) ?
+            \Illuminate\Support\Facades\DB::select("
+                Select Distinct
+                    ( Select appellation From books Where id = BookID ) As book_appellation,
+                    ( Select year From books Where id = BookID ) As book_year,
+                    authors_name,
+                    genres_appellation,
+                    date,
+                    max_purchase
 
-        if (isset($arrayValidatedParameters['genre_appellation']))
-            $collectionSells = $collectionSells->whereIn('book_id', function ($builder) use ($arrayValidatedParameters)
-            {
-                $this->findID_ByGenre($builder->select('id')->from('books'), $arrayValidatedParameters['genre_appellation']);
-            } );
+                From (
+                    Select
+                        BookID,
+                        GROUP_CONCAT(Distinct authors.name) As authors_name,
+                        GROUP_CONCAT(Distinct genres.appellation) As genres_appellation,
+                        max_purchase From (
+                            Select book_id As BookID,
+                            Max(count) As max_purchase
+                            From sells
+                            Group By book_id
+                        ) As table1
+                    Inner Join books on books.id = BookID
 
-        $arrayGroupByBookIDS_AllSells = $this->getGroupByBookIDS_AllSells(
-            $collectionSells->select(\Illuminate\Support\Facades\DB::raw("Max(count) As MaxCount, book_id ") )
-                ->groupBy('book_id')->take($arrayValidatedParameters['limit'])
-                ->get());
+                    Inner Join books_and_authors On BookID = books_and_authors.book_id
+                    Inner Join authors On books_and_authors.author_id = authors.id
 
-        $arrayBookIDS_Length = 0;
-        foreach (\App\Models\Book::whereIn('id', $arrayGroupByBookIDS_AllSells[1] )->get() as $book):
-            $arrayGroupByBookIDS_AllSells[0][$arrayBookIDS_Length]['appellation'] = $book->getAttributeValue("appellation");
-            $arrayGroupByBookIDS_AllSells[0][$arrayBookIDS_Length]['year'] = $book->getAttributeValue("year");
-            $arrayGroupByBookIDS_AllSells[0][$arrayBookIDS_Length]['genres'] = $book->getAttributeValue("genres");
-            $arrayGroupByBookIDS_AllSells[0][$arrayBookIDS_Length]['authors'] = $book->getAttributeValue("authors");
-            $arrayBookIDS_Length++;
+                    Inner Join books_and_genres On BookID = books_and_genres.book_id
+                    Inner Join genres On books_and_genres.genre_id = genres.id
+
+                    Where genres.appellation = :GENRE_APPELLATION
+
+                    group by BookID, max_purchase
+                ) As table2
+                Inner Join sells On sells.book_id = BookID
+
+                Where date Between :BOOKS_DATE_BEGIN And :BOOKS_DATE_END
+                Limit :LIMIT",
+                array
+                (
+                    ":GENRE_APPELLATION" => $arrayValidatedParameters['genre_appellation'],
+                    ":BOOKS_DATE_BEGIN" => $arrayValidatedParameters['date_from'],
+                    ":BOOKS_DATE_END" => $arrayValidatedParameters['date_to'],
+                    ":LIMIT" => $arrayValidatedParameters['limit']
+                )
+            )
+
+            : \Illuminate\Support\Facades\DB::select("
+                Select Distinct
+                    ( Select appellation From books Where id = BookID ) As book_appellation,
+                    ( Select year From books Where id = BookID ) As book_year,
+                    authors_name,
+                    genres_appellation,
+                    date,
+                    max_purchase
+
+                From (
+                    Select
+                        BookID,
+                        GROUP_CONCAT(Distinct authors.name) As authors_name,
+                        GROUP_CONCAT(Distinct genres.appellation) As genres_appellation,
+                        max_purchase From (
+                            Select book_id As BookID,
+                            Max(count) As max_purchase
+                            From sells
+                            Group By book_id
+                        ) As table1
+                    Inner Join books on books.id = BookID
+
+                    Inner Join books_and_authors On BookID = books_and_authors.book_id
+                    Inner Join authors On books_and_authors.author_id = authors.id
+
+                    Inner Join books_and_genres On BookID = books_and_genres.book_id
+                    Inner Join genres On books_and_genres.genre_id = genres.id
+
+                    group by BookID, max_purchase
+                ) As table2
+                Inner Join sells On sells.book_id = BookID
+
+                Where date Between :BOOKS_DATE_BEGIN And :BOOKS_DATE_END
+                Limit :LIMIT",
+                array
+                (
+                    ":BOOKS_DATE_BEGIN" => $arrayValidatedParameters['date_from'],
+                    ":BOOKS_DATE_END" => $arrayValidatedParameters['date_to'],
+                    ":LIMIT" => $arrayValidatedParameters['limit']
+                )
+            )
+        );
+
+        $i = 0;
+        foreach ($arrayPopulateBooks as $populateBook):
+            $arrayPopulateBooks[$i]->authors_name = explode(',', $populateBook->authors_name);
+            $arrayPopulateBooks[$i]->genres_appellation = explode(',', $populateBook->genres_appellation);
+            $i++;
         endforeach;
 
-        return $arrayGroupByBookIDS_AllSells[0];
+        return $arrayPopulateBooks;
+    }
+
+    function addBook(array $arrayValidatedParameters): array
+    {
+        $arrayAuthorsName = \App\Models\Author::whereIn('id', $arrayValidatedParameters['authors'])->select("name")->get()->toArray();
+        if ($this->notEqualArrayLength($arrayAuthorsName, $arrayValidatedParameters['authors']))
+            return array( "error" => "" );
+
+        $arrayGenresAppellation = \App\Models\Genre::whereIn('id', $arrayValidatedParameters['genres'])->select('appellation')->get()->toArray();
+        if ($this->notEqualArrayLength($arrayGenresAppellation, $arrayValidatedParameters['genres']))
+            return array( "error" => "" );
+
+        $newBook = \App\Models\Book::create(
+            array
+            (
+                "appellation" => $arrayValidatedParameters["appellation"],
+                "year" => $arrayValidatedParameters['year']
+            )
+        );
+
+        define('NEW_BOOK_ID', $newBook->getAttributeValue('id'));
+
+        foreach ($arrayValidatedParameters['authors'] as $authorID)
+            foreach ($arrayValidatedParameters['genres'] as $genreID):
+                \App\Models\BookAndAuthor::insert(
+                    array
+                    (
+                        "book_id" => NEW_BOOK_ID,
+                        'author_id' => $authorID
+                    )
+                );
+
+                \App\Models\BookAndGenre::insert(
+                    array
+                    (
+                        "book_id" => NEW_BOOK_ID,
+                        'genre_id' => $genreID
+                    )
+                );
+            endforeach;
+
+        return array
+        (
+            'book_id' => NEW_BOOK_ID,
+            'book_appellation' => $arrayValidatedParameters["appellation"],
+            'year' => $arrayValidatedParameters['year'],
+            'authors_name' => $arrayAuthorsName,
+            'genres_appellation' => $arrayGenresAppellation
+        );
     }
 }
-

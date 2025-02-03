@@ -19,7 +19,11 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::group( [ "middleware" => "App\\Http\\Middleware\\CORS_MiddleWare" ], function(Illuminate\Routing\Router $router)
+Route::group( array
+(
+    "middleware" => "App\\Http\\Middleware\\CORS_MiddleWare"
+),
+    function(Illuminate\Routing\Router $router)
 {
     #Route::get('/GetPopulateAuthors', 'ShopBooksApiController@getPopulateAuthors');
     $router->get('/GetPopulateAuthors', array( "App\\Http\\Controllers\\ShopBooksApiController", 'getPopulateAuthors') );
