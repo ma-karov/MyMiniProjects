@@ -1,0 +1,26 @@
+version: "2.23" 
+
+services: 
+  nginx: 
+    image: "nginx:stable-alpine" 
+    ports: 
+      - "8000:80" 
+    volumes: 
+      - ./Docker-Configures/Nginx.conf:/etc/nginx/conf.d/default.conf:ro; 
+      - ./LaravelShopBooks:/var/www/LaravelTest1 
+
+  php: 
+    build: 
+      context: Docker-Configures 
+      dockerfile: php.conf 
+    volumes: 
+      - ./LaravelShopBooks:/var/www/LaravelTest1 
+
+  mysql: 
+    image: mysql:5.6
+    ports: 
+      - "1025:3306" 
+    env_file: 
+      - Docker-Configures/MySQL.conf 
+
+  
